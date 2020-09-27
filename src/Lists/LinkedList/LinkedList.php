@@ -2,10 +2,12 @@
 
 namespace SM\DataStructures\Lists\LinkedList;
 
+use OutOfBoundsException;
+
 class LinkedList
 {
-	private ?LinkedListNode $head;
-	private int $length;
+	protected ?LinkedListNode $head;
+	protected int $length;
 
 	public function __construct()
 	{
@@ -15,7 +17,8 @@ class LinkedList
 
 	public function find(int $index)
 	{
-		if ($index < 0 || $index >= $this->length) return null;
+		if ($index < 0 || $index >= $this->length)
+			throw new OutOfBoundsException;
 
 		$current = $this->head;
 		$i       = 0;
@@ -39,12 +42,11 @@ class LinkedList
 
 	public function insertAt(int $index, $data)
 	{
-		if ($index < 0 || $index > $this->length) return;
+		if ($index < 0 || $index > $this->length)
+			throw new OutOfBoundsException;
 
-		if ($index == 0) {
-			$this->insert($data);
-			return;
-		}
+		if ($index == 0)
+			return $this->insert($data);
 
 		$current = $this->head;
 		$i       = 0;
@@ -73,12 +75,11 @@ class LinkedList
 
 	public function deleteAt(int $index)
 	{
-		if ($this->length == 0 || $index < 0 || $index >= $this->length) return;
+		if ($this->length == 0 || $index < 0 || $index >= $this->length)
+			throw new OutOfBoundsException;
 
-		if ($index == 0) {
-			$this->delete();
-			return;
-		}
+		if ($index == 0)
+			return $this->delete();
 
 		$current = $this->head;
 		$i       = 0;
