@@ -2,17 +2,49 @@
 
 namespace SM\DataStructures\Lists\LinkedList;
 
+use Iterator;
 use OutOfBoundsException;
 
-class LinkedList
+class LinkedList implements Iterator
 {
 	protected ?LinkedListNode $head;
 	protected int $length;
+	protected ?LinkedListNode $current;
+	protected int $position;
 
 	public function __construct()
 	{
-		$this->head   = null;
-		$this->length = 0;
+		$this->head     = null;
+		$this->length   = 0;
+		$this->current  = null;
+		$this->position = -1;
+	}
+
+	public function rewind()
+	{
+		$this->current  = $this->head ?? null;
+		$this->position = $this->head ? 0 : -1;
+	}
+
+	public function current()
+	{
+		return $this->current;
+	}
+
+	public function key()
+	{
+		return $this->position;
+	}
+
+	public function next()
+	{
+		$this->current = $this->current->next;
+		++$this->position;
+	}
+
+	public function valid()
+	{
+		return $this->position != -1 && !is_null($this->current);
 	}
 
 	public function find(int $index)
